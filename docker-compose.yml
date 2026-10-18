@@ -1,0 +1,21 @@
+services:
+  attendance-app:
+    image: therahulpatil/timesync:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: office-attendance-tracker
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DATA_DIR=/app/data
+      - TZ=Asia/Kolkata
+    volumes:
+      # Persistent named volume preserves all attendance records & database files permanently
+      - attendance_data:/app/data
+
+volumes:
+  attendance_data:
+    name: office_attendance_data
